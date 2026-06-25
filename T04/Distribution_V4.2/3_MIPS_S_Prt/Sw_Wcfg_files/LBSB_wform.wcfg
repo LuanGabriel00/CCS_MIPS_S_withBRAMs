@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="MIPS_S_withBRAMs_noPer_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="MIPS_S_withBRAMs_noPer_tb" />
+            <top_module name="p_mips_s" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="9000001fs"></ZoomEndTime>
+      <Cursor1Time time="9000000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="272"></NameColumnWidth>
+      <ValueColumnWidth column_width="117"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="28" />
+   <wvobject type="divider" fp_name="divider114">
+      <obj_property name="label">Global Controls</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject fp_name="/MIPS_S_withBRAMs_noPer_tb/reset" type="logic">
+      <obj_property name="ElementShortName">reset</obj_property>
+      <obj_property name="ObjectShortName">reset</obj_property>
+   </wvobject>
+   <wvobject fp_name="/MIPS_S_withBRAMs_noPer_tb/clock" type="logic">
+      <obj_property name="ElementShortName">clock</obj_property>
+      <obj_property name="ObjectShortName">clock</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider115">
+      <obj_property name="label">MIPS_S</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="BkColor">#FF0080</obj_property>
+   </wvobject>
+   <wvobject fp_name="/MIPS_S_withBRAMs_noPer_tb/top/I_MIPS_S/cu/PC" type="array">
+      <obj_property name="ElementShortName">PC[31:0]</obj_property>
+      <obj_property name="ObjectShortName">PC[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/MIPS_S_withBRAMs_noPer_tb/top/I_MIPS_S/cu/IR" type="array">
+      <obj_property name="ElementShortName">IR[31:0]</obj_property>
+      <obj_property name="ObjectShortName">IR[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/MIPS_S_withBRAMs_noPer_tb/top/I_MIPS_S/cu/i" type="other">
+      <obj_property name="ElementShortName">i</obj_property>
+      <obj_property name="ObjectShortName">i</obj_property>
+   </wvobject>
+   <wvobject fp_name="/MIPS_S_withBRAMs_noPer_tb/top/I_MIPS_S/cu/PS" type="other">
+      <obj_property name="ElementShortName">PS</obj_property>
+      <obj_property name="ObjectShortName">PS</obj_property>
+   </wvobject>
+   <wvobject fp_name="/MIPS_S_withBRAMs_noPer_tb/top/I_MIPS_S/dp/MDR" type="array">
+      <obj_property name="ElementShortName">MDR[31:0]</obj_property>
+      <obj_property name="ObjectShortName">MDR[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/MIPS_S_withBRAMs_noPer_tb/top/I_MIPS_S/dp/REGS/reg[8]" type="array">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">[8][31:0]</obj_property>
+      <obj_property name="ObjectShortName">[8][31:0]</obj_property>
+      <obj_property name="label">$t0</obj_property>
+   </wvobject>
+   <wvobject fp_name="/MIPS_S_withBRAMs_noPer_tb/top/I_MIPS_S/dp/REGS/reg[9]" type="array">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">[9][31:0]</obj_property>
+      <obj_property name="ObjectShortName">[9][31:0]</obj_property>
+      <obj_property name="label">$t1</obj_property>
+   </wvobject>
+   <wvobject fp_name="/MIPS_S_withBRAMs_noPer_tb/top/I_MIPS_S/dp/REGS/reg[10]" type="array">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">[10][31:0]</obj_property>
+      <obj_property name="ObjectShortName">[10][31:0]</obj_property>
+      <obj_property name="label">$t2</obj_property>
+   </wvobject>
+   <wvobject fp_name="/MIPS_S_withBRAMs_noPer_tb/top/I_MIPS_S/dp/REGS/reg[11]" type="array">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">[11][31:0]</obj_property>
+      <obj_property name="ObjectShortName">[11][31:0]</obj_property>
+      <obj_property name="label">$t3</obj_property>
+   </wvobject>
+   <wvobject fp_name="/MIPS_S_withBRAMs_noPer_tb/top/ce_RAM" type="logic">
+      <obj_property name="ElementShortName">ce_RAM</obj_property>
+      <obj_property name="ObjectShortName">ce_RAM</obj_property>
+   </wvobject>
+   <wvobject fp_name="/MIPS_S_withBRAMs_noPer_tb/top/rw_RAM" type="logic">
+      <obj_property name="ElementShortName">rw_RAM</obj_property>
+      <obj_property name="ObjectShortName">rw_RAM</obj_property>
+   </wvobject>
+   <wvobject fp_name="/MIPS_S_withBRAMs_noPer_tb/top/bw_RAM" type="logic">
+      <obj_property name="ElementShortName">bw_RAM</obj_property>
+      <obj_property name="ObjectShortName">bw_RAM</obj_property>
+   </wvobject>
+   <wvobject fp_name="/MIPS_S_withBRAMs_noPer_tb/top/d_address_CPU" type="array">
+      <obj_property name="ElementShortName">d_address_CPU[31:0]</obj_property>
+      <obj_property name="ObjectShortName">d_address_CPU[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/MIPS_S_withBRAMs_noPer_tb/top/data_in_RAM" type="array">
+      <obj_property name="ElementShortName">data_in_RAM[31:0]</obj_property>
+      <obj_property name="ObjectShortName">data_in_RAM[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider19">
+      <obj_property name="label">Memoria de Dados</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="BkColor">#00FF7F</obj_property>
+   </wvobject>
+   <wvobject fp_name="/MIPS_S_withBRAMs_noPer_tb/top/D_mem/byte_choice" type="array">
+      <obj_property name="ElementShortName">byte_choice[1:0]</obj_property>
+      <obj_property name="ObjectShortName">byte_choice[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/MIPS_S_withBRAMs_noPer_tb/top/d_address_RAM" type="array">
+      <obj_property name="ElementShortName">d_address_RAM[12:0]</obj_property>
+      <obj_property name="ObjectShortName">d_address_RAM[12:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/MIPS_S_withBRAMs_noPer_tb/top/data_out_RAM_int" type="array">
+      <obj_property name="ElementShortName">data_out_RAM_int[31:0]</obj_property>
+      <obj_property name="ObjectShortName">data_out_RAM_int[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/MIPS_S_withBRAMs_noPer_tb/top/D_mem/ce" type="logic">
+      <obj_property name="ElementShortName">ce</obj_property>
+      <obj_property name="ObjectShortName">ce</obj_property>
+   </wvobject>
+   <wvobject fp_name="/MIPS_S_withBRAMs_noPer_tb/top/D_mem/we" type="logic">
+      <obj_property name="ElementShortName">we</obj_property>
+      <obj_property name="ObjectShortName">we</obj_property>
+   </wvobject>
+   <wvobject fp_name="/MIPS_S_withBRAMs_noPer_tb/top/D_mem/we3" type="logic">
+      <obj_property name="ElementShortName">we3</obj_property>
+      <obj_property name="ObjectShortName">we3</obj_property>
+   </wvobject>
+   <wvobject fp_name="/MIPS_S_withBRAMs_noPer_tb/top/D_mem/we2" type="logic">
+      <obj_property name="ElementShortName">we2</obj_property>
+      <obj_property name="ObjectShortName">we2</obj_property>
+   </wvobject>
+   <wvobject fp_name="/MIPS_S_withBRAMs_noPer_tb/top/D_mem/we1" type="logic">
+      <obj_property name="ElementShortName">we1</obj_property>
+      <obj_property name="ObjectShortName">we1</obj_property>
+   </wvobject>
+   <wvobject fp_name="/MIPS_S_withBRAMs_noPer_tb/top/D_mem/we0" type="logic">
+      <obj_property name="ElementShortName">we0</obj_property>
+      <obj_property name="ObjectShortName">we0</obj_property>
+   </wvobject>
+</wave_config>

@@ -35,6 +35,7 @@
 *.jou
 *.str
 *.pb
+xst/
 .Xil/
 _xmsgs/
 isim/
