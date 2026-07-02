@@ -1,0 +1,16 @@
+ Address    Code        Basic                     Source
+
+0x00400000  0x3c011001  lui $1,0x00001001     17       la $t1, dest_text_addr    # $t1 recebe o endereço de dest_text_addr
+0x00400004  0x34290000  ori $9,$1,0x00000000       
+0x00400008  0x8d290000  lw $9,0x00000000($9)  18       lw $t1, 0($t1)            # $t1 agora tem o valor 0x10010000
+0x0040000c  0x3c011001  lui $1,0x00001001     20       la $t0, source_text_addr  # $t0 recebe o endereço de source_text_addr
+0x00400010  0x34284000  ori $8,$1,0x00004000       
+0x00400014  0x8d080000  lw $8,0x00000000($8)  21       lw $t0, 0($t0)            # $t0 agora tem o valor 0x10014000
+0x00400018  0x810a0000  lb $10,0x00000000($8) 25       lb   $t2, 0($t0)          # Carrega 1 byte da fonte
+0x0040001c  0xa12a0000  sb $10,0x00000000($9) 26       sb   $t2, 0($t1)          # Salva 1 byte no destino
+0x00400020  0x11400003  beq $10,$0,0x00000003 28       beq  $t2, $zero, fim      # Se o byte for NULL (0), termina a cópia
+0x00400024  0x21080001  addi $8,$8,0x00000001 30       addi $t0, $t0, 1          # Incrementa ponteiro da fonte
+0x00400028  0x21290001  addi $9,$9,0x00000001 31       addi $t1, $t1, 1          # Incrementa ponteiro do destino
+0x0040002c  0x08100006  j 0x00400018          32       j    loop                 # Volta para o próximo byte
+0x00400030  0x2402000a  addiu $2,$0,0x0000000a35       li   $v0, 10              # Syscall para encerrar programa
+0x00400034  0x0000000c  syscall               36       syscall

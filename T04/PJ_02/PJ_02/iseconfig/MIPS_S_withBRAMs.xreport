@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <report-views version="2.0" >
  <header>
-  <DateModified>2026-07-02T20:11:55</DateModified>
+  <DateModified>2026-07-02T20:47:04</DateModified>
   <ModuleName>MIPS_S_withBRAMs</ModuleName>
   <SummaryTimeStamp>Unknown</SummaryTimeStamp>
-  <SavedFilePath>/home/ise/ise_projs/CCS_MIPS_S_withBRAMs/T04/PJ_01/PJ_01/iseconfig/MIPS_S_withBRAMs.xreport</SavedFilePath>
-  <ImplementationReportsDirectory>/home/ise/ise_projs/CCS_MIPS_S_withBRAMs/T04/PJ_01/PJ_01/</ImplementationReportsDirectory>
-  <DateInitialized>2026-06-23T21:36:48</DateInitialized>
+  <SavedFilePath>/home/ise/ise_projs/CCS_MIPS_S_withBRAMs/T04/PJ_02/PJ_02/iseconfig/MIPS_S_withBRAMs.xreport</SavedFilePath>
+  <ImplementationReportsDirectory>/home/ise/ise_projs/CCS_MIPS_S_withBRAMs/T04/PJ_02/PJ_02</ImplementationReportsDirectory>
+  <DateInitialized>2026-07-02T20:47:04</DateInitialized>
   <EnableMessageFiltering>false</EnableMessageFiltering>
  </header>
  <body>
