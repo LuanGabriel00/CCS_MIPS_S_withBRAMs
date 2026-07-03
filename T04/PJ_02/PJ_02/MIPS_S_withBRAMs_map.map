@@ -9,7 +9,7 @@ Target Device  : xc3s1200e
 Target Package : fg320
 Target Speed   : -4
 Mapper Version : spartan3e -- $Revision: 1.55 $
-Mapped Date    : Thu Jul  2 20:51:40 2026
+Mapped Date    : Thu Jul  2 22:24:26 2026
 
 vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 INFO:Security:54 - 'xc3s1200e' is a WebPack part.
@@ -62,8 +62,8 @@ Logic Distribution:
 Average Fanout of Non-Clock Nets:                3.83
 
 Peak Memory Usage:  715 MB
-Total REAL time to MAP completion:  25 secs 
-Total CPU time to MAP completion:   21 secs 
+Total REAL time to MAP completion:  22 secs 
+Total CPU time to MAP completion:   22 secs 
 
 NOTES:
 
