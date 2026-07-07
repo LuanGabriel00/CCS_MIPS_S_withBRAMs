@@ -25,8 +25,8 @@ loop_strcpy:
     
     beq  $t0, $zero, fim_strcpy 
     
-    addi $a0, $a0, 1          
-    addi $a1, $a1, 1          
+    addu $a0, $a0, 1          
+    addu $a1, $a1, 1          
     j    loop_strcpy          
     
 fim_strcpy:
