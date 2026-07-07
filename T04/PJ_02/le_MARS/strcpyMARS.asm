@@ -8,7 +8,7 @@ dest_text_addr: .word 0
 after_dest:  .word 0 # After the string end, put a label, to enable visualizing the end of the data segment window
    .space 7144 # jump to align to address 0x10014000
 
-filename:  .asciiz "E:/ise_projs/CCS_MIPS_S_withBRAMs/T04/PJ_02/le_MARS/Romeo&Juliet_Act2-Scene2.txt" # filename at the end, to facilitate…
+filename:  .asciiz "D:/Maquinas Virtuais/Xilinx_ISE_14.7_Win10_14.7_VM_0213_1/Ise_projs/CCS_MIPS_S_withBRAMs/T04/PJ_02/le_MARS/RomeoJuliet_Act2-Scene2.txt" # filename at the end, to facilitate…
 
 source_text_addr: .word 0 # After the string end, put a label, to enable visualizing the end of the data segment window
    .space 9200 # This completes the reserved quasi-9Kbytes for the destination string
@@ -90,5 +90,6 @@ loop_strcpy:
     j    loop_strcpy          # Repete
     
 fim_strcpy:
-    jr   $ra                  # Retorna para a main
+    jr   $ra 
+
     

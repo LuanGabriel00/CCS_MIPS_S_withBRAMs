@@ -1,0 +1,15 @@
+ Address    Code        Basic                     Source
+
+0x00400000  0x3c011001  lui $1,0x00001001     14       la $a0, source_text_addr  
+0x00400004  0x34243fe0  ori $4,$1,0x00003fe0       
+0x00400008  0x3c011001  lui $1,0x00001001     15       la $a1, dest_text_addr    
+0x0040000c  0x34250000  ori $5,$1,0x00000000       
+0x00400010  0x0c100006  jal 0x00400018        16       jal strcpy
+0x00400014  0x08100005  j 0x00400014          19       j aqui 
+0x00400018  0x80880000  lb $8,0x00000000($4)  23       lb   $t0, 0($a0)          
+0x0040001c  0xa0a80000  sb $8,0x00000000($5)  24       sb   $t0, 0($a1)          
+0x00400020  0x11000003  beq $8,$0,0x00000003  26       beq  $t0, $zero, fim_strcpy 
+0x00400024  0x20840001  addi $4,$4,0x00000001 28       addi $a0, $a0, 1          
+0x00400028  0x20a50001  addi $5,$5,0x00000001 29       addi $a1, $a1, 1          
+0x0040002c  0x08100006  j 0x00400018          30       j    loop_strcpy          
+0x00400030  0x03e00008  jr $31                33       jr   $ra
