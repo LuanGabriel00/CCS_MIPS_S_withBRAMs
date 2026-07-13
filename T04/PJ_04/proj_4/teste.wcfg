@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="/home/ise/HDL/CCS_MIPS_S_withBRAMs/T04/PJ_04/proj_4/MIPS_S_com_perif_tb_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="mips_s_com_perif_tb" />
+            <top_module name="numeric_std" />
+            <top_module name="p_mips_s" />
+            <top_module name="std_logic_1164" />
+            <top_module name="std_logic_arith" />
+            <top_module name="std_logic_signed" />
+            <top_module name="std_logic_unsigned" />
+            <top_module name="textio" />
+            <top_module name="vcomponents" />
+            <top_module name="vital_primitives" />
+            <top_module name="vital_timing" />
+            <top_module name="vpkg" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="21" />
+   <wvobject fp_name="/mips_s_com_perif_tb/ucf_clock" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ucf_clock</obj_property>
+      <obj_property name="ObjectShortName">ucf_clock</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_s_com_perif_tb/ucf_reset" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ucf_reset</obj_property>
+      <obj_property name="ObjectShortName">ucf_reset</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_s_com_perif_tb/ucf_restart" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ucf_restart</obj_property>
+      <obj_property name="ObjectShortName">ucf_restart</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_s_com_perif_tb/ucf_next" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ucf_next</obj_property>
+      <obj_property name="ObjectShortName">ucf_next</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_s_com_perif_tb/ucf_go" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ucf_go</obj_property>
+      <obj_property name="ObjectShortName">ucf_go</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_s_com_perif_tb/ucf_sw_st_ed" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ucf_sw_st_ed</obj_property>
+      <obj_property name="ObjectShortName">ucf_sw_st_ed</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_s_com_perif_tb/ucf_sw_b_w" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ucf_sw_b_w</obj_property>
+      <obj_property name="ObjectShortName">ucf_sw_b_w</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_s_com_perif_tb/ucf_sw_hhw_lhw" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ucf_sw_hhw_lhw</obj_property>
+      <obj_property name="ObjectShortName">ucf_sw_hhw_lhw</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_s_com_perif_tb/ucf_ld_cp_ed" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ucf_ld_cp_ed</obj_property>
+      <obj_property name="ObjectShortName">ucf_ld_cp_ed</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_s_com_perif_tb/ucf_dec_ddp" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ucf_dec_ddp[7:0]</obj_property>
+      <obj_property name="ObjectShortName">ucf_dec_ddp[7:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_s_com_perif_tb/ucf_an" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ucf_an[3:0]</obj_property>
+      <obj_property name="ObjectShortName">ucf_an[3:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_s_com_perif_tb/clock_period" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">clock_period</obj_property>
+      <obj_property name="ObjectShortName">clock_period</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_s_com_perif_tb/uut/Inst_Periferico/pst" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">pst</obj_property>
+      <obj_property name="ObjectShortName">pst</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_s_com_perif_tb/uut/Inst_Periferico/nst" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">nst</obj_property>
+      <obj_property name="ObjectShortName">nst</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_s_com_perif_tb/uut/Inst_Periferico/copy_done" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">copy_done</obj_property>
+      <obj_property name="ObjectShortName">copy_done</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_s_com_perif_tb/uut/Inst_Periferico/suspend" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">suspend</obj_property>
+      <obj_property name="ObjectShortName">suspend</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_s_com_perif_tb/uut/Inst_Periferico/d_address_ram_per" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">d_address_ram_per[31:0]</obj_property>
+      <obj_property name="ObjectShortName">d_address_ram_per[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_s_com_perif_tb/uut/Inst_Periferico/data_in_ram_per" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">data_in_ram_per[31:0]</obj_property>
+      <obj_property name="ObjectShortName">data_in_ram_per[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_s_com_perif_tb/uut/w_d_address_cpu" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">w_d_address_cpu[31:0]</obj_property>
+      <obj_property name="ObjectShortName">w_d_address_cpu[31:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_s_com_perif_tb/uut/w_ce_cpu" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">w_ce_cpu</obj_property>
+      <obj_property name="ObjectShortName">w_ce_cpu</obj_property>
+   </wvobject>
+   <wvobject fp_name="/mips_s_com_perif_tb/uut/w_rw_cpu" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">w_rw_cpu</obj_property>
+      <obj_property name="ObjectShortName">w_rw_cpu</obj_property>
+   </wvobject>
+</wave_config>
