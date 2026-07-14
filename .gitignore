@@ -47,3 +47,4 @@ xsim.dir/
 *.bak
 *.orig
 *~
+*.DS_Store
