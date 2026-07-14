@@ -1,0 +1,22 @@
+ Address    Code        Basic                     Source
+
+0x00400000  0x3c011001  lui $1,0x00001001     10   	la	$t0,V1		# generate pointer to V1 source vector
+0x00400004  0x3428002c  ori $8,$1,0x0000002c       
+0x00400008  0x3c011001  lui $1,0x00001001     11   	la	$t1,V2		# generate pointer to V2 source vector
+0x0040000c  0x34290058  ori $9,$1,0x00000058       
+0x00400010  0x3c011001  lui $1,0x00001001     12   	la	$t2,V3		# generate pointer to V3 destination vector
+0x00400014  0x342a0000  ori $10,$1,0x00000000      
+0x00400018  0x3c011001  lui $1,0x00001001     14   	la	$t3,size	# get address of size
+0x0040001c  0x342b0084  ori $11,$1,0x00000084      
+0x00400020  0x8d6b0000  lw $11,0x00000000($11)15   	lw	$t3,0($t3)	# register $t1 contains the size of the array
+0x00400024  0x19600009  blez $11,0x00000009   18   	blez	$t3,end		# if size is/becomes 0, end of processing
+0x00400028  0x8d0c0000  lw $12,0x00000000($8) 19   	lw	$t4,0($t0)
+0x0040002c  0x8d2d0000  lw $13,0x00000000($9) 20   	lw	$t5,0($t1)
+0x00400030  0x018d6021  addu $12,$12,$13      21   	addu	$t4,$t4,$t5 
+0x00400034  0xad4c0000  sw $12,0x00000000($10)22   	sw	$t4,0($t2)	# update V3 vector element in memory
+0x00400038  0x25080004  addiu $8,$8,0x0000000423   	addiu	$t0,$t0,4	# advance pointers
+0x0040003c  0x25290004  addiu $9,$9,0x0000000424   	addiu	$t1,$t1,4	
+0x00400040  0x254a0004  addiu $10,$10,0x00000025   	addiu	$t2,$t2,4	
+0x00400044  0x256bffff  addiu $11,$11,0xffffff26   	addiu	$t3,$t3,-1	# decrement elements to process counter
+0x00400048  0x08100009  j 0x00400024          27   	j	loop		# execute the loop another time
+0x0040004c  0x08100013  j 0x0040004c          30   end:	j	end

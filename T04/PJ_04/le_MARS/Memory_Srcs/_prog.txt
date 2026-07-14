@@ -1,0 +1,65 @@
+ Address    Code        Basic                     Source
+
+0x00400000  0x3c08ffff  lui $8,0x0000ffff     35       lui  $t0, 0xFFFF            # $t0 = 0xFFFF0000
+0x00400004  0x8d090000  lw $9,0x00000000($8)  36       lw   $t1, 0($t0)            # $t1 = conteudo de 0xFFFF0000 (go_ff)
+0x00400008  0x31290001  andi $9,$9,0x00000001 37       andi $t1, $t1, 0x1          # Isola o bit 0
+0x0040000c  0x1120fffc  beq $9,$0,0xfffffffc  38       beq  $t1, $zero, laco1      # Se 0, go nao apertado, repete
+0x00400010  0x3c08ffff  lui $8,0x0000ffff     44       lui  $t0, 0xFFFF
+0x00400014  0x35080001  ori $8,$8,0x00000001  45       ori  $t0, $t0, 0x0001       # $t0 = 0xFFFF0001 (cp_ed_ff)
+0x00400018  0x8d090000  lw $9,0x00000000($8)  46       lw   $t1, 0($t0)            # $t1 = conteudo de 0xFFFF0001
+0x0040001c  0x31290001  andi $9,$9,0x00000001 47       andi $t1, $t1, 0x1          # Isola bit 0 (copia terminou = 1?)
+0x00400020  0x1120fffb  beq $9,$0,0xfffffffb  48       beq  $t1, $zero, laco2      # Se 0, copia em andamento, repete
+0x00400024  0x3c08ffff  lui $8,0x0000ffff     54       lui  $t0, 0xFFFF            # $t0 = 0xFFFF0000 (go_ff)
+0x00400028  0x8d090000  lw $9,0x00000000($8)  55       lw   $t1, 0($t0)            
+0x0040002c  0x31290001  andi $9,$9,0x00000001 56       andi $t1, $t1, 0x1          
+0x00400030  0x1120fffc  beq $9,$0,0xfffffffc  57       beq  $t1, $zero, laco3      # Se 0, repete ate apertar go novamente
+0x00400034  0x3c08ffff  lui $8,0x0000ffff     60       lui  $t0, 0xFFFF
+0x00400038  0x35080002  ori $8,$8,0x00000002  61       ori  $t0, $t0, 0x0002       # $t0 = 0xFFFF0002 (mode_reg)
+0x0040003c  0x8d100000  lw $16,0x00000000($8) 62       lw   $s0, 0($t0)            # $s0 = mode_reg completo
+0x00400040  0x320d0001  andi $13,$16,0x000000063       andi $t5, $s0, 0x1          # $t5 = St_Ed (bit 0): 0 = inicio / 1 = fim
+0x00400044  0x320e0002  andi $14,$16,0x000000064       andi $t6, $s0, 0x2          # $t6 = B_w (bit 1): 0 = byte / 2 = palavra
+0x00400048  0x3c111001  lui $17,0x00001001    71       lui  $s1, 0x1001            
+0x0040004c  0x36310004  ori $17,$17,0x0000000472       ori  $s1, $s1, 0x0004       # $s1 = 0x10010004 
+0x00400050  0x11a0000a  beq $13,$0,0x0000000a 74       beq  $t5, $zero, laco4      # St_Ed = 0? Ponteiro pronto. Vai pro laco4.
+0x00400054  0x3c08ffff  lui $8,0x0000ffff     77       lui  $t0, 0xFFFF
+0x00400058  0x35080004  ori $8,$8,0x00000004  78       ori  $t0, $t0, 0x0004       # $t0 = 0xFFFF0004 (text_size_reg)
+0x0040005c  0x8d0f0000  lw $15,0x00000000($8) 79       lw   $t7, 0($t0)            # $t7 = tamanho do texto
+0x00400060  0x31ef3fff  andi $15,$15,0x00003ff80       andi $t7, $t7, 0x3FFF       # Isola bits 13-0 
+0x00400064  0x31effffc  andi $15,$15,0x0000fff81       andi $t7, $t7, 0xFFFC       # Alinha para multiplo de 4
+0x00400068  0x022f8821  addu $17,$17,$15      82       addu $s1, $s1, $t7          # $s1 = base + tamanho (aponta pra FORA do texto)
+0x0040006c  0x11c00002  beq $14,$0,0x00000002 85       beq  $t6, $zero, ajusta_byte_fim
+0x00400070  0x2631fffc  addiu $17,$17,0xffffff86       addiu $s1, $s1, -4          # Modo Palavra: recua 4 bytes
+0x00400074  0x0810001f  j 0x0040007c          87       j    laco4
+0x00400078  0x2631ffff  addiu $17,$17,0xffffff89       addiu $s1, $s1, -1          # Modo Byte: recua 1 byte
+0x0040007c  0x11c00002  beq $14,$0,0x00000002 96       beq  $t6, $zero, le_byte    # B_w = 0? le byte
+0x00400080  0x8e2a0000  lw $10,0x00000000($17)97       lw   $t2, 0($s1)            # B_w = 1 (valor 2): le palavra inteira
+0x00400084  0x08100023  j 0x0040008c          98       j    envia
+0x00400088  0x922a0000  lbu $10,0x00000000($17100      lbu  $t2, 0($s1)            # B_w = 0: le 1 byte
+0x0040008c  0x3c08ffff  lui $8,0x0000ffff     104      lui  $t0, 0xFFFF
+0x00400090  0x35080008  ori $8,$8,0x00000008  105      ori  $t0, $t0, 0x0008       # $t0 = 0xFFFF0008 (data_ts_reg)
+0x00400094  0xad0a0000  sw $10,0x00000000($8) 106      sw   $t2, 0($t0)            # escreve o dado
+0x00400098  0x3c08ffff  lui $8,0x0000ffff     109      lui  $t0, 0xFFFF
+0x0040009c  0x3508000c  ori $8,$8,0x0000000c  110      ori  $t0, $t0, 0x000C       # $t0 = 0xFFFF000C (show_ff)
+0x004000a0  0x240b0001  addiu $11,$0,0x0000000111      li   $t3, 1
+0x004000a4  0xad0b0000  sw $11,0x00000000($8) 112      sw   $t3, 0($t0)            # Liga o display
+0x004000a8  0x3c08ffff  lui $8,0x0000ffff     116      lui  $t0, 0xFFFF
+0x004000ac  0x35080003  ori $8,$8,0x00000003  117      ori  $t0, $t0, 0x0003       # $t0 = 0xFFFF0003 (nxt_rst_reg)
+0x004000b0  0x8d0c0000  lw $12,0x00000000($8) 118      lw   $t4, 0($t0)            
+0x004000b4  0x1180fffc  beq $12,$0,0xfffffffc 119      beq  $t4, $zero, espera_btn # Fica travado ate um botao enviar sinal != 0
+0x004000b8  0x3c08ffff  lui $8,0x0000ffff     124      lui  $t0, 0xFFFF
+0x004000bc  0x3508000c  ori $8,$8,0x0000000c  125      ori  $t0, $t0, 0x000C       # $t0 = 0xFFFF000C (show_ff)
+0x004000c0  0xad000000  sw $0,0x00000000($8)  126      sw   $zero, 0($t0)          
+0x004000c4  0x318b0001  andi $11,$12,0x0000000129      andi $t3, $t4, 0x1          # Isola bit 0 (restart)
+0x004000c8  0x1560000b  bne $11,$0,0x0000000b 130      bne  $t3, $zero, reinicia   # Bit 0 = 1? Vai pro restart
+0x004000cc  0x15a00005  bne $13,$0,0x00000005 133      bne  $t5, $zero, retrocede  # St_Ed = 1? Modo fim: retrocede
+0x004000d0  0x11c00002  beq $14,$0,0x00000002 136      beq  $t6, $zero, avanca_byte
+0x004000d4  0x26310004  addiu $17,$17,0x000000137      addiu $s1, $s1, 4           # Modo palavra: soma 4
+0x004000d8  0x0810001f  j 0x0040007c          138      j    laco4
+0x004000dc  0x26310001  addiu $17,$17,0x000000140      addiu $s1, $s1, 1           # Modo byte: soma 1
+0x004000e0  0x0810001f  j 0x0040007c          141      j    laco4
+0x004000e4  0x11c00002  beq $14,$0,0x00000002 145      beq  $t6, $zero, retro_byte
+0x004000e8  0x2631fffc  addiu $17,$17,0xffffff146      addiu $s1, $s1, -4          # Modo palavra: subtrai 4
+0x004000ec  0x0810001f  j 0x0040007c          147      j    laco4
+0x004000f0  0x2631ffff  addiu $17,$17,0xffffff149      addiu $s1, $s1, -1          # Modo byte: subtrai 1
+0x004000f4  0x0810001f  j 0x0040007c          150      j    laco4
+0x004000f8  0x08100012  j 0x00400048          154      j prepara_ponteiro          # Recalcula do zero usando os mesmos modos

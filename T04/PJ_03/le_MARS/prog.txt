@@ -1,0 +1,16 @@
+ Address    Code        Basic                     Source
+
+0x00400000  0x3c011001  lui $1,4097           13   	la	$t1, source_text_addr	# $t1 = 0x10012000
+0x00400004  0x34292000  ori $9,$1,8192             
+0x00400008  0x25290004  addiu $9,$9,4         14   	addiu $t1, $t1, 4           # Skip the .word, point to text start
+0x0040000c  0x3c011001  lui $1,4097           16   	la	$s1, dest_text_addr	    # $s1 = 0x10010000
+0x00400010  0x34310000  ori $17,$1,0               
+0x00400014  0x26310004  addiu $17,$17,4       17   	addiu $s1, $s1, 4           # Skip the .word, point to text start
+0x00400018  0x912a0000  lbu $10,0($9)         20   	lbu	$t2, 0($t1)		
+0x0040001c  0x100a0004  beq $0,$10,4          21   	beq	$zero, $t2, fim			
+0x00400020  0xa22a0000  sb $10,0($17)         23   	sb	$t2, 0($s1)		
+0x00400024  0x25290001  addiu $9,$9,1         25   	addiu	$t1, $t1, 1		
+0x00400028  0x26310001  addiu $17,$17,1       26       addiu	$s1, $s1, 1		
+0x0040002c  0x08100006  j 0x00400018          28   	j		loop
+0x00400030  0x0810000c  j 0x00400030          31   	j	fim			
+0x00400034  0x00000000  nop                   32   	nop
