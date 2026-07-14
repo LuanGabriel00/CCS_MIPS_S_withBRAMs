@@ -77,23 +77,40 @@ architecture behavior of MIPS_S_com_perif_tb is
     end process;
 	 
 	 --simulacao
-	 stim_proc: process
+stim_proc: process
     begin
-        -- Inicia segurando o reset do sistema por um tempinho
+        -- Inicia segurando o reset do sistema
         ucf_reset <= '1';
         wait for 100 ns;
         ucf_reset <= '0';
 
-        -- Espera o MIPS rodar a rotina de inicialização dele
-        wait for 300 ns;
-		  
-		  -- APERTA O BOTÃO GO! (Sinal vai para '1', espera um pouco, volta para '0')
+        -- Espera o MIPS rodar a rotina inicial e chegar no Laço 1
+        wait for 500 ns;
+
+        -- 1º APERTO DO GO! (Inicia a cópia)
         ucf_go <= '1';
-        wait for 40 ns;
+        wait for 20 us;   -- SEGURA O BOTÃO POR 20 MICROSSEGUNDOS
         ucf_go <= '0';
 
-        -- A partir daqui o Testbench entra em modo de espera infinito.
-        -- O seu DMA (Periférico) vai assumir o controle e fazer a cópia.
+        -- Aguarda o fim da cópia (LED acender)
+        wait until ucf_LD_Cp_Ed = '1';
+        
+        -- Dá tempo para o MIPS entrar no Laço 3
+        wait for 20 us; 
+
+        -- 2º APERTO DO GO! (Aprova o modo e libera o Laço 3)
+        ucf_go <= '1';
+        wait for 20 us;   -- SEGURA O BOTÃO POR 20 MICROSSEGUNDOS
+        ucf_go <= '0';
+        
+        -- Espera a letra ser escrita no display (Laço 4)
+        wait for 20 us;
+
+        -- APERTA O BOTÃO NEXT! 
+        ucf_next <= '1';
+        wait for 20 us;   -- SEGURA O BOTÃO POR 20 MICROSSEGUNDOS
+        ucf_next <= '0';
+        
         wait;
     end process;
 end behavior;
