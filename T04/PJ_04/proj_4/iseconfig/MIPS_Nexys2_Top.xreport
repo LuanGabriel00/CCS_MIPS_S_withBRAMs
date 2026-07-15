@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <report-views version="2.0" >
  <header>
-  <DateModified>2026-07-14T03:58:11</DateModified>
+  <DateModified>2026-07-15T02:15:45</DateModified>
   <ModuleName>MIPS_Nexys2_Top</ModuleName>
   <SummaryTimeStamp>Unknown</SummaryTimeStamp>
-  <SavedFilePath>/home/ise/HDL/CCS_MIPS_S_withBRAMs/T04/PJ_04/proj_4/iseconfig/MIPS_Nexys2_Top.xreport</SavedFilePath>
-  <ImplementationReportsDirectory>/home/ise/HDL/CCS_MIPS_S_withBRAMs/T04/PJ_04/proj_4/</ImplementationReportsDirectory>
+  <SavedFilePath>/home/ise/Ise_projs/CCS_MIPS_S_withBRAMs/T04/PJ_04/proj_4/iseconfig/MIPS_Nexys2_Top.xreport</SavedFilePath>
+  <ImplementationReportsDirectory>/home/ise/Ise_projs/CCS_MIPS_S_withBRAMs/T04/PJ_04/proj_4/</ImplementationReportsDirectory>
   <DateInitialized>2026-07-13T01:13:19</DateInitialized>
   <EnableMessageFiltering>false</EnableMessageFiltering>
  </header>

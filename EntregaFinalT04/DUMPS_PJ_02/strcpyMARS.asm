@@ -7,11 +7,10 @@
 
 	# space for the destination string
 	after_dest: .word 0 # After the destination string end, put a label
-,
 	# to enable visualizing the end of the MIPS_S Data Memory
 	.space 7144 # Jump to get close to address of the 16Kbytes block of the Peripheral Memory
 
-	filename: .asciiz "Romeo&Juliet_Act2-Scene2.txt" # filename at the end, to facilitate…
+	filename: .asciiz "Romeo&Juliet_Act2-Scene2.txt" # filename at the end, to facilitateï¿½
 
 	source_text_addr: .word 0 # After the filename end, put label, which must start at address 0x10014000
 
@@ -38,9 +37,9 @@ main:
 
     # 2. Prepara argumentos para a funcao strcpy
 
-    la $a0, source_text_addr  # $a0 = Ponteiro da Fonte (Garante o endereço 0x10014000)
+    la $a0, source_text_addr  # $a0 = Ponteiro da Fonte (Garante o endereï¿½o 0x10014000)
 
-    la $a1, dest_text_addr    # $a1 = Ponteiro do Destino (Garante o endereço 0x10010000)
+    la $a1, dest_text_addr    # $a1 = Ponteiro do Destino (Garante o endereï¿½o 0x10010000)
 
     jal strcpy
 
@@ -50,7 +49,7 @@ main:
 
     # li $v0, 4                 # Syscall 4: Print String
 
-    # la $a0, source_text_addr  # Endereço de onde o texto foi salvo (0x10014000)
+    # la $a0, source_text_addr  # Endereï¿½o de onde o texto foi salvo (0x10014000)
 
     # syscall
 
@@ -58,9 +57,9 @@ main:
 
 
 
-    # 3. Fim da execução (Projeto 2)
+    # 3. Fim da execuï¿½ï¿½o (Projeto 2)
 
-    # Nota: No Projeto 3, isso deverá ser trocado por um "j aqui" (loop eterno).
+    # Nota: No Projeto 3, isso deverï¿½ ser trocado por um "j aqui" (loop eterno).
 
     li $v0, 10
 
@@ -76,7 +75,7 @@ main:
 
 carrega_arquivo:
 
-    # Salva o endereço de retorno na pilha
+    # Salva o endereï¿½o de retorno na pilha
 
     addi $sp, $sp, -4
 
@@ -86,7 +85,7 @@ carrega_arquivo:
 
     # Syscall 13: Abrir arquivo
 
-    la $a0, filename          # Endereço da string com o nome do arquivo
+    la $a0, filename          # Endereï¿½o da string com o nome do arquivo
 
     li $a1, 0                 # Flag 0 = Somente leitura
 
@@ -100,7 +99,7 @@ carrega_arquivo:
 
 
 
-    # Evita ler se o arquivo não existir (File Descriptor < 0)
+    # Evita ler se o arquivo nï¿½o existir (File Descriptor < 0)
 
     bltz $s0, fim_carrega
 
@@ -110,9 +109,9 @@ carrega_arquivo:
 
     move $a0, $s0             # Argumento 1: File Descriptor
 
-    la   $a1, source_text_addr# Argumento 2: Endereço do buffer (0x10014000)
+    la   $a1, source_text_addr# Argumento 2: Endereï¿½o do buffer (0x10014000)
 
-    li   $a2, 9200            # Argumento 3: Tamanho máximo a ser lido
+    li   $a2, 9200            # Argumento 3: Tamanho mï¿½ximo a ser lido
 
     li   $v0, 14
 
@@ -132,7 +131,7 @@ carrega_arquivo:
 
 fim_carrega:
 
-    # Restaura o endereço de retorno e volta para a main
+    # Restaura o endereï¿½o de retorno e volta para a main
 
     lw   $ra, 0($sp)
 
@@ -152,9 +151,9 @@ strcpy:
 
 loop_strcpy:
 
-    lb   $t0, 0($a0)          # Lê 1 byte do endereço Fonte
+    lb   $t0, 0($a0)          # Lï¿½ 1 byte do endereï¿½o Fonte
 
-    sb   $t0, 0($a1)          # Escreve esse byte no endereço Destino
+    sb   $t0, 0($a1)          # Escreve esse byte no endereï¿½o Destino
 
     
 

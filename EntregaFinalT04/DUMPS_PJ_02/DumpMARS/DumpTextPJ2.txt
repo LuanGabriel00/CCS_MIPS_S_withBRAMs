@@ -1,0 +1,39 @@
+ Address    Code        Basic                     Source
+
+0x00400000  0x0c100008  jal 0x00400020        35       jal carrega_arquivo
+0x00400004  0x3c011001  lui $1,0x00001001     41       la $a0, source_text_addr  # $a0 = Ponteiro da Fonte (Garante o endere�o 0x10014000)
+0x00400008  0x34244000  ori $4,$1,0x00004000       
+0x0040000c  0x3c011001  lui $1,0x00001001     43       la $a1, dest_text_addr    # $a1 = Ponteiro do Destino (Garante o endere�o 0x10010000)
+0x00400010  0x34250000  ori $5,$1,0x00000000       
+0x00400014  0x0c10001e  jal 0x00400078        45       jal strcpy
+0x00400018  0x2402000a  addiu $2,$0,0x0000000a65       li $v0, 10
+0x0040001c  0x0000000c  syscall               67       syscall
+0x00400020  0x23bdfffc  addi $29,$29,0xfffffff81       addi $sp, $sp, -4
+0x00400024  0xafbf0000  sw $31,0x00000000($29)83       sw   $ra, 0($sp)
+0x00400028  0x3c011001  lui $1,0x00001001     89       la $a0, filename          # Endere�o da string com o nome do arquivo
+0x0040002c  0x34243fe0  ori $4,$1,0x00003fe0       
+0x00400030  0x24050000  addiu $5,$0,0x0000000091       li $a1, 0                 # Flag 0 = Somente leitura
+0x00400034  0x24060000  addiu $6,$0,0x0000000093       li $a2, 0                 # Mode (ignorado no MARS)
+0x00400038  0x2402000d  addiu $2,$0,0x0000000d95       li $v0, 13
+0x0040003c  0x0000000c  syscall               97       syscall
+0x00400040  0x00028021  addu $16,$0,$2        99       move $s0, $v0             # Salva o File Descriptor em $s0
+0x00400044  0x06000009  bltz $16,0x00000009   105      bltz $s0, fim_carrega
+0x00400048  0x00102021  addu $4,$0,$16        111      move $a0, $s0             # Argumento 1: File Descriptor
+0x0040004c  0x3c011001  lui $1,0x00001001     113      la   $a1, source_text_addr# Argumento 2: Endere�o do buffer (0x10014000)
+0x00400050  0x34254000  ori $5,$1,0x00004000       
+0x00400054  0x240623f0  addiu $6,$0,0x000023f0115      li   $a2, 9200            # Argumento 3: Tamanho m�ximo a ser lido
+0x00400058  0x2402000e  addiu $2,$0,0x0000000e117      li   $v0, 14
+0x0040005c  0x0000000c  syscall               119      syscall
+0x00400060  0x00102021  addu $4,$0,$16        125      move $a0, $s0
+0x00400064  0x24020010  addiu $2,$0,0x00000010127      li   $v0, 16
+0x00400068  0x0000000c  syscall               129      syscall
+0x0040006c  0x8fbf0000  lw $31,0x00000000($29)137      lw   $ra, 0($sp)
+0x00400070  0x23bd0004  addi $29,$29,0x0000000139      addi $sp, $sp, 4
+0x00400074  0x03e00008  jr $31                141      jr   $ra
+0x00400078  0x80880000  lb $8,0x00000000($4)  155      lb   $t0, 0($a0)          # L� 1 byte do endere�o Fonte
+0x0040007c  0xa0a80000  sb $8,0x00000000($5)  157      sb   $t0, 0($a1)          # Escreve esse byte no endere�o Destino
+0x00400080  0x11000003  beq $8,$0,0x00000003  161      beq  $t0, $zero, fim_strcpy # Verifica fim da string (NULL / 0x00)
+0x00400084  0x20840001  addi $4,$4,0x00000001 165      addi $a0, $a0, 1          # Incrementa ponteiro da Fonte
+0x00400088  0x20a50001  addi $5,$5,0x00000001 167      addi $a1, $a1, 1          # Incrementa ponteiro do Destino
+0x0040008c  0x0810001e  j 0x00400078          169      j    loop_strcpy          # Repete
+0x00400090  0x03e00008  jr $31                175      jr   $ra 

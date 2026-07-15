@@ -1,6 +1,6 @@
 -------------------------------------------------------------------------------
 --
---  The MIPS-S Processor (Simulatable)
+--  The MIPS-S Processor (Prototypable)
 --		Last Release: 1st/June/2025
 --	Authors: 
 --		Ney Calazans / Fernando Moraes
@@ -139,8 +139,6 @@
 --			synchronous reset (to avoid BRAM corruption).
 --		- The simulatable and prototypable versions were revised to become
 --			the most similar the possible.
---	30/10/2025 (Ney Calazans)
---		- Several comments were enhanced.
 -------------------------------------------------------------------------------
 
 --+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -164,7 +162,7 @@ package p_MIPS_S is
 									-- the clock cycle 1 of every instruction
             CY2:   std_logic;       -- Identifies the second stage,
 									-- the clock cycle 2 of every instruction
-            walu:  std_logic;       -- Identifies the third stage ALU+ op
+            walu:  std_logic;       -- Identifies the third stage
             wmdr:  std_logic;       
 			-- Identifies the fourth stage of load instructions
             wpc:   std_logic;       -- PC write enable
@@ -173,7 +171,7 @@ package p_MIPS_S is
             ce:    std_logic;       -- Data memory chip enable and r/w controls
             rw:    std_logic;
             bw:    std_logic;       -- Byte-word control (mem write only)
-            i:     inst_type;       -- Instruction id - results from decoding
+            i:     inst_type;       -- Instruction identification
 			rst_md:std_logic;       
 			-- Signal to start multiplication and division
 	end record;
@@ -223,8 +221,8 @@ end reg32bits;
 --+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 library IEEE;
 use IEEE.std_logic_1164.all;
-use IEEE.std_logic_unsigned.all;   
-use work.p_MIPS_S.all;
+use IEEE.std_logic_unsigned.all;
+use work.p_MIPS_S.all;         
 -- The two lines below may be uncommented for using a LUTRAM approach
 --		to implement registers explicitly for Xilinx FPGAs 
 --		(more comments below...)
@@ -383,31 +381,31 @@ use IEEE.std_logic_arith.all;  -- needed for comparison instructions SLTxU
 use work.p_MIPS_S.all;
    
 entity datapath is
-      port(	ck, rst							: in std_logic;
-            suspend_ack                     : in std_logic;
-			d_address						: out wires32;
-			data							: inout wires32;
-			-- Simulatable version has a bi-directional data bus
-			uins							: in microinstruction;
-			IR_IN							: in wires32;
-			NPC_IN							: in wires32;
-			end_mul, end_div				: out std_logic;
-			inst_Bgroup_out, jump_out		: out std_logic;
-			RESULT_OUT  					: out wires32
+      port(	ck, rst						: in std_logic;
+            suspend_ack					: in std_logic;
+			d_address					: out wires32;
+			data_in						: in wires32;  
+			data_out					: out wires32;  
+			uins						: in microinstruction;
+			IR_IN						: in wires32;
+			NPC_IN						: in wires32;
+			end_mul, end_div			: out std_logic;
+			inst_Bgroup_out, jump_out	: out std_logic;
+			RESULT_OUT					: out wires32
           );
 end datapath;
 
 architecture datapath of datapath is
-    signal	inst_Bgroup, inst_Rgroup, inst_Igroup, rst_muldiv : std_logic;   
-    signal 	R1_in, R2_in, sign_extension, R3_in, R1, R2, R3, op1, op2,
+    signal	inst_Bgroup, inst_Rgroup, inst_Igroup, rst_muldiv : std_logic;
+    signal	R1_in, R2_in, sign_extension, R3_in, R1, R2, R3, op1, op2,
 			outalu, RALU, Quotient, Remainder, D_Hi, D_Lo, HI, LO,
-			MDR_in, MDR, RESULT, RIN : wires32 := (others=>'0');
-	-- Remember, initialization of these signals to all 0's is only valid 
-	--	for simulation purposes...
-    signal Product : std_logic_vector(63 downto 0);
-    signal adD, adS : std_logic_vector(4 downto 0) := (others=>'0');
+			MDR_in, MDR, RESULT, RIN : wires32;
+	
+	
+    signal	Product : std_logic_vector(63 downto 0);
+    signal	adD, adS : std_logic_vector(4 downto 0);
 
-    signal jump : std_logic := '0';
+    signal jump : std_logic;
 
 begin
 	-- Auxiliary signals to reduce Hw computations in the datapath. These
@@ -561,11 +559,11 @@ begin
 	--		memory, or if the processor is suspended.
 	--=========================================================================
 	d_address <= RALU when (suspend_ack='0') else (others=>'Z');
-    
-	-- A tristate connection to the bus controlled by the memory write signals,
+
+	-- The prototypable processor outputs R2 contents straight to data_out bus
 	--	when MIPS_S is not suspended
-	data <= R2 when (uins.ce='1' and uins.rw='0' and suspend_ack='0')
-	           else (others=>'Z');
+	data_out <= R2 when (uins.ce='1' and uins.rw='0' and suspend_ack='0')
+	           else (others=>'Z');  
 
 	-- M8 is a mux that chooses what to pass to the input of the MDR register.
 	--	This is either the straight 32-bit value coming from memory, or
@@ -583,16 +581,16 @@ begin
 	--				always be the least significant byte (LSB).
 	--
 	--	There are then two alternative codings:
-    --	When using interleaved memory use the code below (e.g. for MIPS_S_Prt)
-    --	M8: MDR_in <= data when uins.i=LW  else
-    --		x"000000" & data( 7 downto  0) when RALU(1 downto 0)="00" else
-    --      x"000000" & data(15 downto  8) when RALU(1 downto 0)="01" else
-    --      x"000000" & data(23 downto 16) when RALU(1 downto 0)="10" else
-    --      x"000000" & data(31 downto 24) -- when RALU(1 downto 0)="11"
-    --      ;
+    -- When using interleaved memory use the code below
+	M8: MDR_in <= data_in when uins.i=LW  else
+              x"000000" & data_in( 7 downto  0) when RALU(1 downto 0)="00" else
+              x"000000" & data_in(15 downto  8) when RALU(1 downto 0)="01" else
+              x"000000" & data_in(23 downto 16)	when RALU(1 downto 0)="10" else
+              x"000000" & data_in(31 downto 24) -- when RALU(1 downto 0)="11"
+              ;
     --	When using non-interleaved, directly byte addressable memory
 	--		organization, use the code below (e.g. for MIPS_S_Sim)
-	M8: MDR_in <= data when uins.i=LW  else	x"000000" & data(7 downto 0);
+	--M8: MDR_in <= data when uins.i=LW  else	x"000000" & data(7 downto 0);
 
  	-- Instantiation of the Memory Data Register (MDR)
 	RMDR: entity work.reg32bits port map(ck=>ck, rst=>rst, ce=>uins.wmdr, 
@@ -673,11 +671,11 @@ architecture control_unit of control_unit is
 
 begin
 	---------------------------------------------------------------------------
-	-- This is the Control Unit - Block 1 of 4
-	--	- This Block 1 implements the MIPS_S main control registers: PC, NPC
-	--		IR. It also creates its driving logic.
-	--	- This Block is used in instruction fetch from the Instruction Memory,
-	--		storing it in IR, incrementing the PC, written to the NPC register.
+	-- First stage of MIPS_S - Control Unit Block 1 of 4
+	--	- This is Control Unit Block 1 of 4, which implements the MIPS_S main
+	--		control registers.
+	--	- This stage performs the instruction fetch from Instruction Memory,
+	--		stores it in IR and increments the PC, storing it in NPC register.
 	---------------------------------------------------------------------------
 
 	-- M1 is the mux that selects what to input to the PC register 
@@ -697,7 +695,7 @@ begin
 	PC_reg: entity work.reg32bits generic map(INIT_VALUE=>x"00400000")   
 		port map(ck=>ck, rst=>rst, ce=>uins_int.wpc, D=>PC_in, Q=>PC);
 
-	incpc <= PC + 4;	-- The PC incrementer
+	incpc <= PC + 4;
   
 	NPC_reg: entity work.reg32bits 
 			port map(ck=>ck, rst=>rst, ce=>uins_int.CY1, D=>incpc, Q=>NPC);
@@ -712,7 +710,7 @@ begin
 						-- address bus of the Instruction Memory
 
 	---------------------------------------------------------------------------
-	-- 	This is the Control Unit - Block 2 of 4
+	-- 	This is the Control Unit Block 2 of 4
 	--	- Instruction Decoding (& info enabling the ALU operation definition).
     --	- This block generates 1 Output Function of the Control Unit, signal i.
 	--	- Signal i identifies which of the 37 distinct instructions of MIPS_S
@@ -793,7 +791,7 @@ begin
 	--	execution.
 
 	---------------------------------------------------------------------------
-	-- 	This is the Control Unit - Block 3 of 4
+	-- 	This is the Control Unit Block 3 of 4
 	--		- Two VHDL processes respectively generate:
 	--			1) The state register of the MIPS_S Control FSM
 	--			2) The state transition function of the MIPS_S Control FSM
@@ -876,7 +874,7 @@ cu_susp_ack_reg:
     suspend_ack <= suspend_ack_intcu;
 
 	---------------------------------------------------------------------------
-	-- This is the Control Unit - Block 4 of 4
+	-- This is the Control Unit Block 4 of 4
     --	- Output function of the MIPS_S Control FSM
 	--	- Generates 11 control signals. Most of these are write enable signals
 	--		for registers on the Datapath and Control Unit. 
@@ -919,7 +917,7 @@ end control_unit;
 
 --+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 --+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
---	MIPS_S (Simulatable) Top Level entity
+--	MIPS_S (Prototypable) Top Level entity
 --		It instantiates the Datapath and Control units
 --+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 --+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -935,8 +933,8 @@ entity MIPS_S is
           i_address			: out wires32;
           instruction		: in wires32;
           d_address			: out wires32;
-          data				: inout wires32 
-
+          data_in			: in wires32;
+		  data_out			: out wires32
 		);
 end MIPS_S;
 
@@ -962,7 +960,7 @@ begin
 
 	dp: entity work.datapath port map(ck=>clock, rst=>reset,
 	    suspend_ack=>suspend_ack_int,
-		d_address=>d_address, data=>data,
+		d_address=>d_address, data_in=>data_in, data_out=>data_out,
 		uins=>uins, IR_IN=>IR, NPC_IN=>NPC,
 		end_mul=>end_mul, end_div=>end_div,
 		inst_Bgroup_out=>inst_Bgroup, jump_out=>jump,

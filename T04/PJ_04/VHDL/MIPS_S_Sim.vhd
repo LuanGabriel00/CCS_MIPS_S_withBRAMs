@@ -935,7 +935,7 @@ entity MIPS_S is
           i_address			: out wires32;
           instruction		: in wires32;
           d_address			: out wires32;
-          data				: inout wires32 
+          data				: inout wires32
 
 		);
 end MIPS_S;
